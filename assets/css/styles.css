@@ -35,7 +35,7 @@ body {
 
 #container {
   background-color: var(--soft-black);
-  height: 100vh;
+  min-height: 100vh;
   margin: 0 auto;
   padding: 4%;
   max-width: 450px;
