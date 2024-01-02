@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vocabulary</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+  <main>
+    <div id="container">
+      <h1 id="title">Vocabulário de inglês</h1>
+      <button
+        type="button"
+        id="show-new-word-input"
+        class="show-button"
+      >
+        Nova palavra
+      </button>
+      <button
+        type="button"
+        id="show-new-category-input"
+        class="show-button"
+      >
+        Nova categoria
+      </button>
+      <div id="new-word-input-wrap" class="hidden">
+        <div class="input-wrap">
+          <label for="new-word-input">Palavra</label>
+          <input
+            type="text"
+            id="new-word-input"
+            placeholder="Informe uma palavra"
+          />
+        </div>
+        <div class="input-wrap">
+          <label for="new-translation-input">Tradução</label>
+          <input
+            type="text"
+            id="new-translation-input"
+            placeholder="Sua respectiva tradução"
+          />
+        </div>
+        <div class="input-wrap">
+          <select>
+            <option value="" selected>Selecione uma categoria</option>
+          </select>
+        </div>
+        <p id="new-word-success" class="hidden">Palavra adicionada!</p>
+        <button
+          type="button"
+          id="add-new-word-button"
+          class="add-button"
+        >
+          Adicionar
+        </button>
+        <button
+          type="button"
+          id="cancel-new-word-button"
+          class="cancel-button"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div id="new-category-input-wrap" class="hidden">
+        <div class="input-wrap">
+          <label for="new-category-input">Categoria</label>
+          <input
+            type="text"
+            id="new-category-input"
+            placeholder="Informe uma categoria"
+          />
+        </div>
+        <p id="new-category-success" class="hidden">Categoria adicionada!</p>
+        <button
+          type="button"
+          id="add-new-category-button"
+          class="add-button"
+        >
+          Adicionar
+        </button>
+        <button
+          type="button"
+          id="cancel-new-category-button"
+          class="cancel-button"
+        >
+          Cancelar
+        </button>
+      </div>
+      <div id="strawberry">
+        <!-- Tabelas serão renderizadas aqui -->
+      </div>
+    </div>
+  </main>
+</body>
+</html>
