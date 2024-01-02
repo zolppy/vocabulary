@@ -6,6 +6,7 @@ html {
 
 :root {
   --soft-black: #333;
+  --extra-soft-black: #555;
   --soft-white: #f5f5f5;
   --soft-blue: #33f;
   --extra-soft-blue: #aaf;
@@ -28,13 +29,16 @@ html {
 }
 
 body {
-  background-color: var(--soft-black);
+  background-color: var(--extra-soft-black);
   height: 100vh;
 }
 
 #container {
+  background-color: var(--soft-black);
+  height: 100vh;
+  margin: 0 auto;
   padding: 4%;
-  max-width: 480px;
+  max-width: 450px;
 }
 
 #title {
