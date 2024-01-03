@@ -3,32 +3,19 @@
   - remover categoria
   - editar palavra
   - editar categoria
-  - não adicionar categoria já existente
-  - não adicionar palavra já existente
-  - não adicionar tradução já existente
-  - refatorar o sistema para seguir a estrutura do dictionary:
-    {
-      "categories": [
-        {
-          "name": "cores",
-          "words": [
-            {
-              "word": "blue",
-              "translation": "azul"
-            }
-          ]
-        }
-      ]
-    }
-
-    dictionary.categories[0].name;
-    dictionary.categories[0].words[0].word;
-    dictionary.categories[0].words[0].translation;
+  - não adicionar categoria já existente na interface
+  - não adicionar palavra já existente na interface
+  - não adicionar palavra já existente no armazenamento
+  - não adicionar tradução já existente na interface
+  - não adicionar tradução já existente no armazenamento
+  - permitir que categorias tenham nomes compostos
 */
 
 // Variáveis globais
 
-const dictionary = []; // Object
+const dictionary = {
+  categories: []
+};
 const categories = []; // String
 
 // Mapeamento de elementos
@@ -104,7 +91,6 @@ function cancelAddNewCategory() {
 function addNewWord(word, translation, category) {
   const tbodyContainer = document.querySelector(`#${category}`);
   const wordInput = document.querySelector("#new-word-input");
-  const selectInput = document.querySelector("select");
   const translationInput = document.querySelector("#new-translation-input");
   let capitalizedCategory = capitalizeWord(category);
 
@@ -151,7 +137,6 @@ function addNewWord(word, translation, category) {
   wordInput.focus();
 
   newWordSuccess();
-  saveWord(word, translation, category);
 }
 
 function newWordSuccess() {
@@ -193,32 +178,103 @@ function addNewCategory(category) {
   newCategoryInput.focus();
 
   newCategorySuccess();
-  saveCategory(category);
 }
 
 // Funções de armazenamento
 
 function saveWord(word, translation, category) {
-  dictionary.push({
-    word: word,
-    translation: translation,
-    category: category
-  });
+  let i = 0;
+  let exist = false;
+
+  for (const thisCategory of dictionary.categories) {
+    if (thisCategory.name === category) {
+      dictionary.categories[i].words.push(
+        {
+          word: word,
+          translation: translation
+        }
+      )
+      exist = true;
+      break;
+    }
+    i++;
+  }
+
+  if (!exist) {
+    dictionary.categories.push(
+      {
+        name: category,
+        words: [
+          {
+            word: word,
+            translation: translation
+          }
+        ]
+      }
+    )
+  }
 
   localStorage.setItem("dictionary", JSON.stringify(dictionary));
 }
 
-function saveCategory(category) {
-  categories.push(category);
+/* dictionary.categories.push(
+  {
+    name: "a",
+    words: []
+  },
+  {
+    name: "b",
+    words: []
+  },
+  {
+    name: "c",
+    words: []
+  },
+); */
 
-  localStorage.setItem("categories", JSON.stringify(categories));
+// TODO
+function saveCategory(category) {
+  // conferir se a categoria já existe no dictionary
+  // se não existir, armazená-la adequadamente no dictionary
+  // armazenar o dictionary localmente
+
+  let exist = dictionary.categories.find(thisCategory => thisCategory.name === category);
+
+  if (!exist) {
+    console.log("rabo");
+    dictionary.categories.push(
+      {
+        name: category,
+        words: []
+      }
+    );
+  }
+
+  localStorage.setItem("dictionary", JSON.stringify(dictionary));
 }
 
 function loadWords() {
   const storedDictionary = JSON.parse(localStorage.getItem("dictionary"));
-  const storedCategories = JSON.parse(localStorage.getItem("categories"));
+  //const storedCategories = JSON.parse(localStorage.getItem("categories"));
 
   if (storedDictionary) {
+    dictionary.categories = dictionary.categories || storedDictionary.categories;
+
+    let i = 0;
+
+    for (const category of dictionary.categories) {
+      const { name } = category;
+  
+      for (const thisWord of category.words) {
+        let { word, translation } = thisWord;
+  
+        addNewWord(word, translation, name);
+      }
+    }
+  }
+  
+
+  /* if (storedDictionary) {
     for (const words of storedDictionary) {
       !dictionary && dictionary.push(words);
 
@@ -233,7 +289,7 @@ function loadWords() {
   
       addNewCategory(storedCategory);
     });
-  }
+  }*/
 }
 
 // Eventos
@@ -252,12 +308,14 @@ addNewWordButton.addEventListener("click", () => {
   let category = getInputValue(selectInput);
 
   addNewWord(word, translation, category);
+  saveWord(word, translation, category);
 });
 addNewCategoryButton.addEventListener("click", () => {
   const newCategoryInput = document.querySelector("#new-category-input");
   let category = newCategoryInput.value;
 
   addNewCategory(category);
+  saveCategory(category);
 });
 window.addEventListener("load", () => {
   // Limpando campos de entrada
