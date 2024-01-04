@@ -9,6 +9,7 @@
   - não adicionar tradução já existente na interface
   - não adicionar tradução já existente no armazenamento
   - permitir que categorias tenham nomes compostos
+  - esta porcaria está com problema na leitura dos dados agora, impossibilitando que sejam exibidos na interface
 */
 
 // Variáveis globais
@@ -16,7 +17,6 @@
 const dictionary = {
   categories: []
 };
-const categories = []; // String
 
 // Mapeamento de elementos
 
@@ -168,16 +168,10 @@ function newCategorySuccess() {
 }
 
 function addNewCategory(category) {
-  const newCategoryInput = document.querySelector("#new-category-input");
+  let option = buildNewCategory(category);
   const container = document.querySelector("select");
 
-  let option = buildNewCategory(category);
-
   container.innerHTML += option;
-  clearInputField(newCategoryInput);
-  newCategoryInput.focus();
-
-  newCategorySuccess();
 }
 
 // Funções de armazenamento
@@ -217,27 +211,7 @@ function saveWord(word, translation, category) {
   localStorage.setItem("dictionary", JSON.stringify(dictionary));
 }
 
-/* dictionary.categories.push(
-  {
-    name: "a",
-    words: []
-  },
-  {
-    name: "b",
-    words: []
-  },
-  {
-    name: "c",
-    words: []
-  },
-); */
-
-// TODO
 function saveCategory(category) {
-  // conferir se a categoria já existe no dictionary
-  // se não existir, armazená-la adequadamente no dictionary
-  // armazenar o dictionary localmente
-
   let exist = dictionary.categories.find(thisCategory => thisCategory.name === category);
 
   if (!exist) {
@@ -255,41 +229,20 @@ function saveCategory(category) {
 
 function loadWords() {
   const storedDictionary = JSON.parse(localStorage.getItem("dictionary"));
-  //const storedCategories = JSON.parse(localStorage.getItem("categories"));
 
   if (storedDictionary) {
     dictionary.categories = dictionary.categories || storedDictionary.categories;
 
-    let i = 0;
-
-    for (const category of dictionary.categories) {
-      const { name } = category;
-  
-      for (const thisWord of category.words) {
-        let { word, translation } = thisWord;
-  
-        addNewWord(word, translation, name);
-      }
+    for (const cat of storedDictionary.categories) {
+      const { name } = cat;
+      
+      cat.words.forEach(thisWord => {
+        addNewWord(thisWord.word, thisWord.translation, name);
+      });
+      
+      addNewCategory(name);
     }
   }
-  
-
-  /* if (storedDictionary) {
-    for (const words of storedDictionary) {
-      !dictionary && dictionary.push(words);
-
-      const {word, translation, category} = words;
-      addNewWord(word, translation, category);
-    }
-  }
-
-  if (storedCategories) {
-    storedCategories.forEach(storedCategory => {
-      !categories && categories.push(storedCategory);
-  
-      addNewCategory(storedCategory);
-    });
-  }*/
 }
 
 // Eventos
@@ -315,6 +268,11 @@ addNewCategoryButton.addEventListener("click", () => {
   let category = newCategoryInput.value;
 
   addNewCategory(category);
+
+  clearInputField(newCategoryInput);
+  newCategoryInput.focus();
+  newCategorySuccess();
+
   saveCategory(category);
 });
 window.addEventListener("load", () => {
