@@ -5,36 +5,36 @@ html {
 }
 
 :root {
-  --soft-black: #333;
-  --extra-soft-black: #555;
-  --soft-white: #f5f5f5;
-  --soft-blue: #33f;
-  --extra-soft-blue: #aaf;
-  --soft-gray: #aaa;
-  --extra-soft-gray: #ccc;
-  --soft-green: #3f3;
-  --extra-soft-green: #afa;
-  --soft-red: #f33;
-  --extra-soft-red: #faa;
+  --black: rgb(17, 17, 17);
+  --soft-black: rgb(51, 51, 51);
+  --soft-white: rgb(213, 213, 213);
+  --blue: rgb(89, 89, 228);
+  --soft-blue: rgb(134, 134, 233);
+  --green: rgb(89, 228, 89);
+  --soft-green: rgb(134, 233, 134);
+  --red: rgb(228, 89, 89);
+  --soft-red: rgb(233, 134, 134);
+  --gray: rgb(170, 170, 170);
+  --soft-gray: rgb(204, 204, 204);
 }
 
 * {
   box-sizing: border-box;
   color: var(--soft-white);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 400;
   margin: 0;
   padding: 0;
 }
 
 body {
-  background-color: var(--extra-soft-black);
+  background-color: var(--soft-black);
   height: 100vh;
 }
 
 #container {
-  background-color: var(--soft-black);
+  background-color: var(--black);
   min-height: 100vh;
   margin: 0 auto;
   padding: 4%;
@@ -59,13 +59,13 @@ button {
 }
 
 .show-button {
-  border-color: var(--soft-blue);
-  color: var(--soft-blue);
+  border-color: var(--blue);
+  color: var(--blue);
 }
 
 .show-button:active {
-  border-color: var(--extra-soft-blue);
-  color: var(--extra-soft-blue);
+  border-color: var(--soft-blue);
+  color: var(--soft-blue);
 }
 
 #show-new-category-input {
@@ -74,11 +74,11 @@ button {
 
 #new-word-input-wrap,
 #new-category-input-wrap {
-  border: 1px solid var(--soft-gray);
+  border: 1px solid var(--gray);
   border-radius: 8px;
   margin-top: 5%;
   padding: 2%;
-  transition: .3 ease-in;
+  transition: .5 ease-in;
 }
 
 .input-wrap:nth-child(2) {
@@ -88,7 +88,7 @@ button {
 input[type="text"],
 select {
   background-color: transparent;
-  border: 1px solid var(--soft-gray);
+  border: 1px solid var(--gray);
   border-radius: 5px;
   outline: none;
   padding: 1%;
@@ -96,7 +96,7 @@ select {
 
 input[type="text"]:focus,
 select:focus {
-  border-color: var(--soft-blue);
+  border-color: var(--blue);
 }
 
 input[type="text"] {
@@ -109,63 +109,65 @@ select {
 
 #new-word-success,
 #new-category-success {
-  color: var(--soft-green);
+  color: var(--green);
   margin-top: 2%;
 }
 
 .add-button {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.add-button:active {
   border-color: var(--soft-green);
   color: var(--soft-green);
 }
 
-.add-button:active {
-  border-color: var(--extra-soft-green);
-  color: var(--extra-soft-green);
-}
-
 .cancel-button {
-  border-color: var(--soft-red);
-  color: var(--soft-red);
+  border-color: var(--red);
+  color: var(--red);
   margin-top: 2.2%;
 }
 
 .cancel-button:active {
-  border-color: var(--extra-soft-red);
-  color: var(--extra-soft-red);
+  border-color: var(--soft-red);
+  color: var(--soft-red);
 }
 
 table {
   border-collapse: collapse;
   margin-top: 5%;
   width: 100%;
-  transition: .5 ease-in;
+  transition: 1 ease-in;
 }
 
 caption {
-  background-color: var(--soft-gray);
-  border: 1px solid var(--extra-soft-gray);
+  background-color: transparent;
+  color: var(--red);
+  border: 1px solid var(--soft-gray);
   border-bottom: none;
   font-weight: 600;
   padding: 2%;
 }
 
 th, td {
-  border: 1px solid var(--extra-soft-gray);
+  border: 1px solid var(--soft-gray);
   padding: 2%;
 }
 
 th {
-  background-color: var(--soft-blue);
+  background-color: transparent;
+  color: var(--blue);
   font-weight: 600;
 }
 
 tr {
-  transition: .5 ease-in;
+  transition: 1 ease-in;
 }
 
 td {
-  color: var(--soft-black);
-  background-color: var(--extra-soft-blue);
+  color: var(--green);
+  background-color: transparent;
 }
 
 .hidden {
