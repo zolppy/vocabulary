@@ -1,3 +1,5 @@
+// Requisitos
+
 /* Próximas features:
   - remover palavra
   - remover categoria
@@ -9,7 +11,6 @@
   - não adicionar tradução já existente na interface
   - não adicionar tradução já existente no armazenamento
   - permitir que categorias tenham nomes compostos
-  - esta porcaria está com problema na leitura dos dados agora, impossibilitando que sejam exibidos na interface
 */
 
 // Variáveis globais
@@ -260,12 +261,22 @@ addNewWordButton.addEventListener("click", () => {
   let translation = getInputValue(newTranslationInputField);
   let category = getInputValue(selectInput);
 
+  if (!word || !translation || !category) {
+    alert("Preencha todos os campos.");
+    return;
+  }
+
   addNewWord(word, translation, category);
   saveWord(word, translation, category);
 });
 addNewCategoryButton.addEventListener("click", () => {
   const newCategoryInput = document.querySelector("#new-category-input");
   let category = newCategoryInput.value;
+
+  if (!category) {
+    alert("Informe uma categoria.");
+    return;
+  }
 
   addNewCategory(category);
 
