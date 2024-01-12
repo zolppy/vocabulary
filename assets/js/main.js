@@ -6,10 +6,6 @@
   - editar palavra
   - editar categoria
   - não adicionar categoria já existente na interface
-  - não adicionar palavra já existente na interface
-  - não adicionar palavra já existente no armazenamento
-  - não adicionar tradução já existente na interface
-  - não adicionar tradução já existente no armazenamento
   - permitir que categorias tenham nomes compostos
 */
 
@@ -261,10 +257,35 @@ addNewWordButton.addEventListener("click", () => {
   let translation = getInputValue(newTranslationInputField);
   let category = getInputValue(selectInput);
 
+  // Checa se algum campo está vazio
+
   if (!word || !translation || !category) {
     alert("Preencha todos os campos.");
     return;
   }
+
+  // Verifica se palavra e tradução já existem
+  for (const category of dictionary.categories) {
+    let find = false;
+
+    for (const thisWord of category.words) {
+      if (thisWord.word === word) {
+        alert("Palavra já existente.");
+        find = true;
+      }
+  
+      if (thisWord.translation === translation) {
+        alert("Tradução já existente.");
+        find = true;
+      }
+
+      if (find) {
+        return;
+      }
+    }
+  }
+
+  // Adiciona na interface e no armazenamento
 
   addNewWord(word, translation, category);
   saveWord(word, translation, category);
