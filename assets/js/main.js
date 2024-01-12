@@ -1,11 +1,10 @@
-// Requisitos
+// Novas funcionalidades previstas
 
 /* Próximas features:
   - remover palavra
   - remover categoria
   - editar palavra
   - editar categoria
-  - não adicionar categoria já existente na interface
   - permitir que categorias tenham nomes compostos
 */
 
@@ -212,7 +211,6 @@ function saveCategory(category) {
   let exist = dictionary.categories.find(thisCategory => thisCategory.name === category);
 
   if (!exist) {
-    console.log("rabo");
     dictionary.categories.push(
       {
         name: category,
@@ -265,6 +263,7 @@ addNewWordButton.addEventListener("click", () => {
   }
 
   // Verifica se palavra e tradução já existem
+
   for (const category of dictionary.categories) {
     let find = false;
 
@@ -285,7 +284,7 @@ addNewWordButton.addEventListener("click", () => {
     }
   }
 
-  // Adiciona na interface e no armazenamento
+  // Adiciona à interface e ao armazenamento
 
   addNewWord(word, translation, category);
   saveWord(word, translation, category);
@@ -298,6 +297,17 @@ addNewCategoryButton.addEventListener("click", () => {
     alert("Informe uma categoria.");
     return;
   }
+
+  // Verifica se a categoria já existe
+
+  for (const thisCategory of dictionary.categories) {
+    if (thisCategory.name === category) {
+      alert("Categoria já existente.");
+      return;
+    }
+  }
+
+  // Adiciona categoria à interface e ao armazenamento
 
   addNewCategory(category);
 
